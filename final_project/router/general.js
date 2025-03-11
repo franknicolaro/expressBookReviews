@@ -23,7 +23,18 @@ public_users.post("/register", (req,res) => {
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-    return res.send(JSON.stringify(books, null, 4));
+    let booksPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(books);
+        }, 1000)
+    });
+    booksPromise.then((data) =>{ 
+        console.log("Books obtained.");
+        res.send(data);
+    })
+    .catch((error) =>{
+        return res.status(500).json({message: error})
+    })
 });
 
 // Get book details based on ISBN
@@ -32,7 +43,18 @@ public_users.get('/isbn/:isbn',function (req, res) {
     if(!isbn){
         return res.status(303).json({message: "ISBN not provided"});
     }
-    return res.send(books[isbn]);
+    let bookPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(books[isbn]);
+        }, 1000)
+    });
+    bookPromise.then((data) =>{ 
+        console.log("Book obtained.");
+        res.send(data);
+    })
+    .catch((error) =>{
+        return res.status(500).json({message: error})
+    })
  });
   
 // Get book details based on author
@@ -50,8 +72,18 @@ public_users.get('/author/:author',function (req, res) {
     if(!filteredBooks){
         return res.status(303).json({message: "Author does not exist."})
     }
-  //Write your code here
-  return res.send(filteredBooks);
+    let bookPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(filteredBooks);
+        }, 1000)
+    });
+    bookPromise.then((data) =>{ 
+        console.log("Book(s) obtained.");
+        res.send(data);
+    })
+    .catch((error) =>{
+        return res.status(500).json({message: error})
+    })
 });
 
 // Get all books based on title
@@ -69,8 +101,18 @@ public_users.get('/title/:title',function (req, res) {
     if(!filteredBooks){
         return res.status(303).json({message: "Book with title does not exist."})
     }
-  //Write your code here
-  return res.send(filteredBooks);
+    let bookPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(filteredBooks);
+        }, 1000)
+    });
+    bookPromise.then((data) =>{ 
+        console.log("Book(s) obtained.");
+        res.send(data);
+    })
+    .catch((error) =>{
+        return res.status(500).json({message: error})
+    })
 });
 
 //  Get book review
